@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_showtraffic"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Show Traffic"/>
+    <item
+        android:id="@+id/menu_zoomin"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Zoom In" />
+    <item
+        android:id="@+id/menu_zoomout"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Zoom Out" />
+    <item
+        android:id="@+id/menu_gotoLocation"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Go to Location &amp; Mark" />
+    <item
+        android:id="@+id/menu_showcurrentLocation"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Show Current Location" />
+    <item
+        android:id="@+id/menu_Lineconnecttwopoins"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Line connecting 2 poins" />
+    <item
+        android:id="@+id/menu_getLocationData"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Get Location Data" />
+    <item
+        android:id="@+id/menu_gotoLocationonTouch"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Active the Map Click" />
+</menu>
