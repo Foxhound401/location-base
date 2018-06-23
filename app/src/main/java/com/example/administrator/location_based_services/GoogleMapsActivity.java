@@ -157,8 +157,12 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
                 title = "None - Change to Normal";
                 status = 0;
                 break;
+            default:
+                map.setMapType(GoogleMap.MAP_TYPE_NONE);
         }
-        btStyle.setText(title);
+        if (btStyle != null) {
+            btStyle.setText(title);
+        }
     }
 
     @Override
