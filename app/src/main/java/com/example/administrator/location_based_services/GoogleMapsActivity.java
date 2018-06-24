@@ -228,7 +228,9 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     protected void onPause() {
         super.onPause();
         if (status != 0) {
-            locationManager.removeUpdates(locationListener);
+            if (locationListener != null) {
+                locationManager.removeUpdates(locationListener);
+            }
         }
     }
 
