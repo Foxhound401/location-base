@@ -46,7 +46,7 @@ import java.util.List;
 public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
-    private Button btStyle;
+    private Button btnChangeLocation;
     private int state;
     private GoogleApiClient locationClient;
     private Location currentLocation;
@@ -69,6 +69,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+        btnChangeLocation = (Button) findViewById(R.id.btnChangeLocation);
     }
 
     @Override
@@ -153,15 +154,13 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
                 status = 4;
                 break;
             case 4:
-                map.setMapType(GoogleMap.MAP_TYPE_NONE);
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 title = "None - Change to Normal";
                 status = 0;
                 break;
-            default:
-                map.setMapType(GoogleMap.MAP_TYPE_NONE);
         }
-        if (btStyle != null) {
-            btStyle.setText(title);
+        if (btnChangeLocation != null) {
+            btnChangeLocation.setText(title);
         }
     }
 
@@ -180,15 +179,17 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
                 break;
             case R.id.menu_zoomin:
                 map.animateCamera(CameraUpdateFactory.zoomIn());
+                break;
             case R.id.menu_zoomout:
                 map.animateCamera(CameraUpdateFactory.zoomOut());
+                break;
             case R.id.menu_gotoLocation:
                 CameraPosition cameraPos = new CameraPosition.Builder().target(BEN_THANH_MARKET)
                         .zoom(17).bearing(90).tilt(30).build();
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos));
                 map.addMarker(new MarkerOptions().position(BEN_THANH_MARKET)
                         .title("Ben Thanh Market").snippet("HCM City")
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                 break;
             case R.id.menu_showcurrentLocation:
                 currentLocation = map.getMyLocation();
@@ -208,6 +209,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
             case R.id.menu_getLocationData:
                 locationListener = new MyLocationListener();
                 status = 1;
+                break;
             case R.id.menu_gotoLocationonTouch:
                 map.setOnMapClickListener(new MyOnMapClickListener());
                 break;
@@ -219,8 +221,8 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     protected void onResume() {
         super.onResume();
         if (status != 0) {
-            //locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,0,locationListener);
-            //locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,0,locationListener);
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,0,locationListener);
+            locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,0,locationListener);
         }
     }
 
@@ -304,19 +306,18 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
         } else {
-            //map.setMyLocationEnabled(true);
+            map.setMyLocationEnabled(true);
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             List<String> pr = locationManager.getProviders(true);
             currentLocation = null;
             for (int i = 0; i < pr.size(); i++) {
-                //currentLocation = locationManager.getLastKnownLocation(pr.get(i));
+                currentLocation = locationManager.getLastKnownLocation(pr.get(i));
                 if (currentLocation != null) {
                     LatLng currentPos = new LatLng(currentLocation.getLatitude()
                             , currentLocation.getLongitude());
-                    Log.d("aaa", "bbb");
                     Marker currentMarker = map.addMarker(new MarkerOptions().position(currentPos)
                             .title("My Position").snippet("Mobile Programing")
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background)));
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 15));
                     map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
                 }

@@ -30,10 +30,9 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
         Criteria criteria = new Criteria();
         provider = manager.getBestProvider(criteria,false);
         Log.d("pro",provider);
-        String location="";//xoa
-        //Location location = manager.getLastKnownLocation(provider);
+        Location location = manager.getLastKnownLocation(provider);
         if (location!=null){
-            //onLocationChanged(location);
+            onLocationChanged(location);
         }else {
             txtLat.setText("N/A");
             txtLong.setText("N/A");
@@ -43,7 +42,7 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
     @Override
     protected void onResume() {
         super.onResume();
-        //manager.requestLocationUpdates(provider,400,1,this);
+        manager.requestLocationUpdates(provider,400,1,this);
     }
 
     @Override
